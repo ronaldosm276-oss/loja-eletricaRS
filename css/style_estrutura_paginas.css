@@ -1,0 +1,123 @@
+/* Pegou do google fonts, e importou a fonte roboto para cá, que foda*/
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
+
+*{
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+    font-family: roboto;
+}
+
+:root{
+ --cor_principal: #ffee00;
+ --cor_botao01: #9facf8;
+ --cor_click: rgb(163, 121, 121);
+ --cor_lnk_menu: #545747;
+}
+
+#geral{
+    margin: 20px;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#cabecalho{
+    width: 100%;
+    height: 250px;
+    margin: 20px 0px;
+    background-color: var(--cor_principal);
+    padding: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#logo img{
+    width: 200px;
+    
+}
+
+#menu{
+    background-color: rgb(192, 240, 192);
+    width: 500px;
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#cabecalho ul{
+    display: flex;
+    list-style: none;
+    gap: 40px;
+}
+
+#div-icones img{
+    width: 100px;
+    height: 100px;
+}
+
+
+/* Formatando links*/
+#menu a:link{
+    font-size: 1.8em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--cor_lnk_menu)
+}
+#menu a:visited{
+    font-size: 1.8em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--cor_lnk_menu)
+}
+#menu a:hover{
+    font-size: 2.8em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--cor_principal)
+}
+#menu a:active{
+    font-size: 1.8em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--cor_click)
+}
+
+/*Formatando section pelo id pesquisa*/
+#pesquisa section{
+    width: 500px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#pesquisa input{
+    width: 500px;
+    height: 80px;
+    padding: 20px;
+    border-radius: 30px;
+    font-size: 2em;
+}
+
+
+/*
+ /*{
+ }
+
+ ISSO É UM SELETOR CORINGA, TODOS ELEMENTOS DA PÁGINA SÃO AFETADOS
+    border-box, para que? para design responsivo, tipo site em notebook, em celular, tablet, etc, vai ser diferente
+
+ roboto pegou do site do google, roboto; (isso é um detalhe interessante, o vs code não ajudou a escrever roboto, como saber qual o nome da fonte?)
+
+ :root para criar variaveis???
+    - É importante trabalhar com isso quando estiver usando cores em seu site, serve para trocar todas as cores do site de uma vez
+
+    em margim e padding, se só  1 valor, todos os lados, se 2 valores dois lados, top bottom, 4 valores top bottom right left nessa ordem
+
+*/
