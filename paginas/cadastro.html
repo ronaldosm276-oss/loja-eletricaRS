@@ -8,7 +8,7 @@
     <title>RS ELÉTRICA</title>
     <link rel="shortcut icon" href="../imagens/icon/logo.ico" type="image/x-icon">
 
-    <link rel="stylesheet" href="css/style_estrutura_paginas.css">
+    <link rel="stylesheet" href="../css/style_estrutura_paginas.css">
 
 
     <link rel="stylesheet" href="css/pagina_iniciall.css">
@@ -27,9 +27,9 @@
             
             <nav id="menu">
                 <ul>
-                    <li><a href="index.html" class="lnk_menu"> Home </a></li>
-                    <li><a href="paginas/cadastro.html" class="lnk_menu"> Cadastro </a></li>
-                    <li><a href="paginas/sobre.html" class="lnk_menu"> Sobre </a></li>
+                    <li><a href="../index.html" class="lnk_menu"> Home </a></li>
+                    <li><a href="cadastro.html" class="lnk_menu"> Cadastro </a></li>
+                    <li><a href="sobre.html" class="lnk_menu"> Sobre </a></li>
                     
                 </ul>
             </nav>
@@ -38,9 +38,9 @@
             <div id="div-icones">
                 <ul>
 
-                    <li><a href="paginas/login.html" class="lnk_icone"> <img src="image/icon/login.png" alt="" class="lnk_icone"> </a></li>
+                    <li><a href="paginas/login.html" class="lnk_icone"> <img src="../image/icon/login.png" alt="" class="lnk_icone"> </a></li>
 
-                    <li><a href="paginas/carrinho.html" class="lnk_icone"><img src="image/icon/carrinho.png" alt="" class="lnk_icone"></a></li>
+                    <li><a href="paginas/carrinho.html" class="lnk_icone"><img src="../image/icon/carrinho.png" alt="" class="lnk_icone"></a></li>
 
                 </ul>
 
@@ -51,39 +51,62 @@
             <input type="text" name="pesquisa" id="pesquisa" placeholder="Digite seu produto">
         </section>
 
-        <section id="cards">
-            <div class="card">
-                <img src="image/KitCrimpDesc.jpg" alt="" class="img.card">
-                <h2 class="tito_card">KitCrimpDesc</h2>
-                <h3 class="valor_card">R$ 120,00</h3>
-                <button class="btn_card">Adicionar</button>
-            </div>
-            <div class="card">
-                <img src="image/hikariAmp.jpg" alt="" class="img.card">
-                <h2 class="tito_card">hikariAmp</h2>
-                <h3 class="valor_card">R$ 150,00</h3>
-                <button class="btn_card">Adicionar</button>
-            </div>
-            <div class="card">
-                <img src="image/conectorEmenda.jpg" alt="" class="img.card">
-                <h2 class="tito_card">10 unidades Conector</h2>
-                <h3 class="valor_card">R$ 20,00</h3>
-                <button class="btn_card">Adicionar</button>
-            </div>
-            <div class="card">
-                <img src="image/chuveiroEletrico7500.jpg" alt="" class="img.card">
-                <h2 class="tito_card">Chuveiro 7500W</h2>
-                <h3 class="valor_card">R$ 750,00</h3>
-                <button class="btn_card">Adicionar</button>
-            </div>
-            <div class="card">
-                <img src="image/osciloscopio.jpg" alt="" class="img.card">
-                <h2 class="tito_card">Osciloscopio</h2>
-                <h3 class="valor_card">R$ 1000,00</h3>
-                <button class="btn_card">Adicionar</button>
-            </div>
+        <section id="formulario">
+            <h3>Cadastro</h3>
 
+            <form action="" id="form-pessoa">
+
+                <label for="nome">Nome</label>
+                <input type="text" name="nome" id="nome" class="input01" required maxlength="60" placeholder="Digite seu nome">
+
+                <label for="nome">CPF</label>
+                <input type="text" name="nome" id="cpf" class="input01" required maxlength="14" placeholder="Digite seu CPF">
+                <label for="nome">Nome</label>
+
+                <input type="date" name="data-nascimento" id="data-nascimento" class="input01" required placeholder="Digite seu nome">
+                <label for="data-nascimento">UF</label>
+
+                <label for="sexo"></label>
+                <input type="radio" name="sexo" id="sexoM" class="InputOP" value="M">Masculino
+                <input type="radio" name="sexo" id="sexoF" class="InputOP" value="F">Feminino
+                <input type="radio" name="sexo" id="sexoN" class="InputOP" value="N">Não Declarar
+
+                <label for="CEP">CEP</label>
+                <input type="text" name="CEP" id="CEP" class="input01">
+
+
+
+                <div id="div-dados-endereco" class="oculto">
+
+                    <label for="logradouro">Logradouro</label>
+                    <input type="text" name="logradouro" id="logradouro" class="input01" required>
+
+                    <label for="Número">Número</label>
+                    <input type="text" name="Número" id="Número" class="input02" required maxlength="10" placeholder="digite o número da residência">
+
+                    <label for="bairro">Bairro</label>
+                    <input type="text" name="bairro" id="bairro" class="input01" required>
+
+                    <label for="complemento-end">Complemento</label>
+                    <input type="text" name="complemento-end" id="complemento-end" class="input02" maxlength="100">
+                    
+                    <label for="localidade">Localidade</label>
+                    <input type="text" name="localidade" id="localidade" class="input01" required>
+
+                    <label for="uf">UF</label>
+                    <input type="text" name="uf" id="uf" class="input01" required>
+                    
+                    
+                </div>
+                <div class="oculto">
+                <label for="senha">SENHA</label>
+                <input type="password" name="senha" id="senha">
+               </div>
+
+            </form> 
         </section>
+       
+       
 
         <footer id="rodape">
             <div id="dadosloja">
@@ -91,15 +114,18 @@
                 <h1>Terra de Ninguém; Antártida </h1>
             </div>
 
-            <div id="icones_sociais">
-                <li><a href="coloqueumlinkINSTAGRAMaqui"><img src="image/icon/instagram.png" alt=""></a></li>
-                <li><a href="coloqueumlinkFACEBOOKaqui"><img src="image/icon/facebook.png" alt=""></a></li>
+            <div id="icones-sociais">
+                <ul><li><a href="coloqueumlinkINSTAGRAMaqui"><img src="../image/icon/instagram.png" alt=""></a></li>
+                <li><a href="coloqueumlinkFACEBOOKaqui"><img src="../image/icon/facebook.png" alt=""></a></li></ul>
             </div>
+
+            <div id="div-cartoes">
+                <img src="../image/icon/pagamentos.jpg" alt="">
+            </div>
+
         </footer>
 
-        <div id="div-cartoes">
-            <img src="image/icon/pagamentos.jpg" alt="">
-        </div>
+       
     </main>
 
 </body>
