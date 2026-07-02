@@ -13,7 +13,8 @@
  --cor_principal: #ffee00;
  --cor_botao01: #9facf8;
  --cor_click: rgb(163, 121, 121);
- --cor_lnk_menu: #545747;
+ --cor_lnk_menu: #ffffff;
+ --cor_defundo: #a0ac9d;
 }
 
 #geral{
@@ -42,7 +43,7 @@
 }
 
 #menu{
-    background-color: rgb(192, 240, 192);
+    background-color: var(--cor_defundo);
     width: 500px;
     height: 200px;
     display: flex;
@@ -76,7 +77,7 @@
     color: var(--cor_lnk_menu)
 }
 #menu a:hover{
-    font-size: 2.8em;
+    font-size: 2.1em;
     text-transform: uppercase;
     text-decoration: none;
     color: var(--cor_principal)
@@ -89,8 +90,8 @@
 }
 
 /*Formatando section pelo id pesquisa*/
-#pesquisa section{
-    width: 500px;
+#pesquisa{
+    width: 100%;
     height: 50px;
     display: flex;
     align-items: center;
@@ -103,11 +104,94 @@
     padding: 20px;
     border-radius: 30px;
     font-size: 2em;
+
+}
+
+#cards{
+    background-color: var(--cor_defundo);
+    width: 1000px;
+    min-height: 500px;
+    margin: 20px 0px;
+    padding: 10px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    cursor: pointer;
+    
+}
+
+.card{
+    background-color: var(--cor_principal);
+    width: 250px;
+    min-height: 250px;
+    border: solid 3px var(--cor_principal);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.card:hover{
+ transform: translateY(-5px);
+}
+
+.card h2{
+    text-transform: uppercase;
+    letter-spacing: 5px;
+    margin: 10px 0px;
+}
+
+.card h3{
+    margin: 20px 0px;
+}
+
+.card button{
+    width: 100%;
+    height: 45px;
+    text-transform: uppercase;
+    letter-spacing: 5px;
+    border: none;
+    
+}
+
+.card img{
+    width: 100%;
+    height: 150px;
+}
+
+/*FORMATAÇÃO DO RODAPÉ*/
+
+#rodape{
+    width: 100%;
+    height: 350px;
+    background-color: var(--cor_defundo);
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+#dadosloja{
+    font-size: 0.8em;
+}
+
+#icones-sociais ul{
+    list-style: none;
+}
+
+#icones-sociais img{
+    width: 50px;
+    height: 50px;
+}
+#div-cartoes img{
+    width: 200px;
+    height: auto;
 }
 
 
+
 /*
- /*{
+ 
+ *{
  }
 
  ISSO É UM SELETOR CORINGA, TODOS ELEMENTOS DA PÁGINA SÃO AFETADOS
