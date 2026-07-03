@@ -10,11 +10,11 @@
 }
 
 :root{
- --cor_principal: #ffee00;
+ --cor_principal: #e4c436;
  --cor_botao01: #9facf8;
  --cor_click: rgb(163, 121, 121);
  --cor_lnk_menu: #ffffff;
- --cor_defundo: #a0ac9d;
+ --cor_defundo: #aca9a9;
 }
 
 #geral{
@@ -96,6 +96,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    background-color: var(--cor_botao01);
 }
 
 #pesquisa input{
@@ -104,7 +105,8 @@
     padding: 20px;
     border-radius: 30px;
     font-size: 2em;
-
+    background-color: #ffffff;
+    
 }
 
 #cards{

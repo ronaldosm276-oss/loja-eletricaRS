@@ -1,1 +1,57 @@
+@import url(style_estrutura_paginas.css);
+
 /* FORMATANDO SECTION*/
+#formulario {
+    width: 500px;
+    min-height: 600px;
+    padding: 20px;
+}
+
+h3 {
+    text-align: center;
+    text-transform: uppercase;
+    margin: 30px 0px;
+}
+
+label{
+    display: block;
+    margin: 20px 0px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.input01, .input02{
+    border: none;
+    border-bottom: 1px solid var(--cor_principal);
+    font-size: 1.3em;
+    padding: 5px;
+}
+
+.input01{
+    width: 800px;
+}
+
+.input02{
+    width: 400px;
+}
+
+#div-btns{
+    height: 60px;
+    margin: 40px 0px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#div-btns button{
+    width: 200px;
+    height: 40px;
+    margin-left: 20px;
+    background-color: var(--cor_defundo);
+    border: 3px;
+    border-radius: 9px;
+    text-transform: uppercase;
+    cursor: pointer;
+    font-size: 0.8em;
+    letter-spacing: 2px;
+}
