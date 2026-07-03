@@ -11,7 +11,7 @@
 
 :root{
  --cor_principal: #e4c436;
- --cor_botao01: #9facf8;
+ --cor_botao01: #adb3ce;
  --cor_click: rgb(163, 121, 121);
  --cor_lnk_menu: #ffffff;
  --cor_defundo: #aca9a9;
@@ -32,10 +32,10 @@
     margin: 20px 0px;
     background-color: var(--cor_principal);
     padding: 5px;
-    gap: 600px;
     display: flex;
     justify-content: center;
     align-items: center;
+    border-style: solid;
 }
 
 #logo img{
@@ -50,6 +50,15 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    border-color: #685d5d;
+    border-style: solid;
+    
+}
+
+#menu .lnk_menu{
+    background-color: #505f34;
+    border-style: solid;
+    border-radius: 15px;
 }
 
 #cabecalho ul{
@@ -190,7 +199,14 @@
     height: auto;
 }
 
-
+#sobre{
+    text-align: justify;
+    background-color: rgb(241, 241, 241);
+    white-space: pre-line;
+    padding: 15px;
+    margin: 35px;
+    text-shadow: #383434;
+}
 
 /*
  

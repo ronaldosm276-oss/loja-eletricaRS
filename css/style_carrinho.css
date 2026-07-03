@@ -1,0 +1,203 @@
+/* Container Geral do Carrinho (Alinhamento em duas colunas) */
+#compras {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 30px;
+    margin: 30px auto;
+    padding: 0 20px;
+    max-width: 1200px;
+}
+
+/* --- LADO ESQUERDO: Lista de Compras --- */
+#carrinhoCompras {
+    flex: 2;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+    padding: 20px;
+}
+
+.tabela-carrinho {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.tabela-carrinho th {
+    text-align: left;
+    padding-bottom: 15px;
+    border-bottom: 2px solid #f0f0f0;
+    color: #555;
+    font-size: 14px;
+    text-transform: uppercase;
+}
+
+.tabela-carrinho td {
+    padding: 20px 10px;
+    border-bottom: 1px solid #f0f0f0;
+    vertical-align: middle;
+}
+
+/* Imagem e Texto do Produto injetados pelo JS */
+.td-imagem { width: 90px; }
+.img-produto-carrinho {
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+}
+
+.nome-prod {
+    font-weight: 600;
+    color: #333;
+    font-size: 16px;
+}
+
+/* Controle de Quantidade (+ e -) */
+.controle-qtd {
+    display: flex;
+    align-items: center;
+    border: 1px solid #cccccc;
+    border-radius: 4px;
+    width: max-content;
+}
+
+.btn-qtd {
+    background-color: #f5f5f5;
+    border: none;
+    width: 30px;
+    height: 30px;
+    font-size: 16px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.btn-qtd:hover { background-color: #e5e5e5; }
+
+.input-qtd {
+    width: 40px;
+    height: 30px;
+    text-align: center;
+    border: none;
+    border-left: 1px solid #cccccc;
+    border-right: 1px solid #cccccc;
+}
+
+.td-preco {
+    font-weight: bold;
+    color: #2c3e50;
+    font-size: 16px;
+    text-align: right;
+}
+
+/* --- LADO DIREITO: Painel Lateral --- */
+#lateral {
+    flex: 1;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+/* Bloco do CEP */
+#cep label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 8px;
+    color: #444;
+}
+
+.Agrupa-cep {
+    display: flex;
+    gap: 8px;
+}
+
+#input-cep {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.btn-cep {
+    background-color: #34495e;
+    color: white;
+    border: none;
+    padding: 0 15px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+/* Bloco de Valores */
+.linha-valor {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    font-size: 15px;
+    color: #666;
+}
+
+.valor-verde { color: #2ecc71; font-weight: bold; }
+.divisor-valores { border: 0; border-top: 1px solid #eee; margin: 10px 0; }
+
+.linha-valor.total {
+    font-size: 18px;
+    font-weight: bold;
+    color: #111;
+}
+
+/* Botões de Ação */
+#botoes {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.btn-continuar {
+    display: block;
+    text-align: center;
+    padding: 12px;
+    border: 2px solid #f1c40f;
+    color: #f39c12;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 4px;
+    transition: 0.2s;
+}
+
+.btn-continuar:hover {
+    background-color: #f1c40f;
+    color: #fff;
+}
+
+.btn-finalizar {
+    width: 100%;
+    padding: 14px;
+    background-color: #f1c40f;
+    color: #1a2a3a;
+    border: none;
+    font-weight: bold;
+    font-size: 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    text-transform: uppercase;
+    transition: background 0.2s;
+}
+
+.btn-finalizar:hover {
+    background-color: #f39c12;
+}
+
+/* Responsividade para Celulares */
+@media (max-width: 768px) {
+    #compras {
+        flex-direction: column;
+    }
+    #carrinhoCompras, #lateral {
+        width: 100%;
+    }
+}
