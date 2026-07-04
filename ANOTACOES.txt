@@ -31,3 +31,12 @@
             </div>
 
         </section>
+
+
+
+
+        O que tem fazer agora 03-07-26
+
+    Página carrinho feita pela IA, vou ter que ter cuidado na hora de ver as tags, ids, class, que foram utilizados. A página está funcional.
+
+    Agora, tenho que pelo menos fazer com que um produto de index seja enviado a carrinho, pegando seu valor, e podendo ir adicionando mais de um.
