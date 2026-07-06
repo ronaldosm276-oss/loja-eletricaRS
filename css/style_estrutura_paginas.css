@@ -18,8 +18,8 @@
 }
 
 #geral{
-    margin: 20px;
-    padding: 30px;
+    margin: 3px;
+    padding: 3px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -40,6 +40,8 @@
 
 #logo img{
     width: 200px;
+    border-style: solid;
+    border-color: var(--cor_botao01);
     
 }
 
@@ -124,10 +126,10 @@
     width: 1000px;
     min-height: 500px;
     margin: 20px 0px;
-    padding: 10px;
+    padding: 20px;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 20px;
+    gap: 30px;
     cursor: pointer;
     
 }
@@ -144,12 +146,12 @@
 }
 
 .card:hover{
- transform: translateY(-5px);
+ transform: translateY(-10px);
 }
 
 .card h2{
     text-transform: uppercase;
-    letter-spacing: 5px;
+    letter-spacing: 1px;
     margin: 10px 0px;
 }
 
@@ -162,7 +164,7 @@
     height: 45px;
     text-transform: uppercase;
     letter-spacing: 5px;
-    border: none;
+    border-style:ridge
     
 }
 

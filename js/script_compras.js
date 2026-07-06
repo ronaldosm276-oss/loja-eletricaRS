@@ -52,7 +52,7 @@ document.addEventListener("DOMContentLoaded", function () {
             localStorage.setItem("carrinho-fake", JSON.stringify(carrinho));
 
             // Feedback visual simples para o usuário saber que funcionou
-            alert(`${nomeProduto} foi adicionado ao seu carrinho!`);
+            //alert(`${nomeProduto} foi adicionado ao seu carrinho!`);
         }
     });
 });
