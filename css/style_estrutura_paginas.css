@@ -58,9 +58,10 @@
 }
 
 #menu .lnk_menu{
-    background-color: #505f34;
+    background-color: #595e52;
     border-style: solid;
     border-radius: 15px;
+    padding: 5px;
 }
 
 #cabecalho ul{
