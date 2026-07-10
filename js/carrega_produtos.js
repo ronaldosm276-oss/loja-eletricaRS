@@ -3,17 +3,14 @@ import { produtos } from "./produtos.js";
 
 //PEGANDO ELEMENTO DO DOM
 const section_cards = document.querySelector('#cards')
+const pesquisa = document.querySelector('#pesquisa input')
 
 //FUNÇÃO PARA CARREGAR OS PRODUTOS
 const listarProdutos = () => {
     section_cards.innerHTML = ''
-
-
-
-
+    // Chama a função de montar cards passando todos os produtos
+    montandoCards(produtos)
 }
-
-listarProdutos()
 
 //FILTRANDO AS SEÇÕES COM A COLEÇÃO map
 const listarSecoes = () => {
@@ -31,7 +28,6 @@ const listarSecoes = () => {
 
     //RETORNADO O ARRAY CONVERTIDO
     return secoesMenu
-
 }
 
 //MONTANDO OS LINKS SEÇÕES
@@ -41,7 +37,22 @@ const montarSecoes = () => {
     //LIMPANDO O ELEMENTO ulMenu
     ulMenu.innerHTML = ''
 
-    //PERCORRENDO O ARRAY DAS SEÇÕES FILTRADA
+    // 1. CRIANDO O BOTÃO "TODOS" MANUALMENTE, fora da arrow function, um botão todos permanente
+    const liTodos = document.createElement('li')
+    const aTodos = document.createElement('a')
+    aTodos.setAttribute('href', '#')
+    aTodos.setAttribute('class', 'lnk-secao')
+    aTodos.innerHTML = "Todos"
+
+    // Capturando o clique para listar todos os produtos
+    aTodos.addEventListener('click', (event) => {
+        event.preventDefault() // Evita que a tela pule para o topo
+        montandoCards(produtos)
+    })
+    liTodos.appendChild(aTodos)
+    ulMenu.appendChild(liTodos)
+
+    //PERCORRENDO O ARRAY DAS SEÇÕES FILTRADA, para criar as categorias
     listarSecoes().forEach((elem, i) => {
         //CRIANDO O ELEMENTO li
         const liSecao = document.createElement('li')
@@ -53,7 +64,8 @@ const montarSecoes = () => {
         aSecao.innerHTML = elem.nome_secao
 
         //CAPTURANDO O CLICK DOS LINKS
-        aSecao.addEventListener('click', () => {
+        aSecao.addEventListener('click', (event) => {
+            event.preventDefault() // Evita que a tela pule para o topo
             //CHAMANDO A FUNÇÃO PRODUTOS FILTRADOS
             montandoCards(produtosFiltrados(elem.id_secao))
         })
@@ -64,15 +76,31 @@ const montarSecoes = () => {
         //ADICIONANDO O ELEMENTO FILHO li NO ELEMENTO DO DOM ul
         ulMenu.appendChild(liSecao)
     })
-
 }
-
-montarSecoes()
-
+const ativarPesquisa = () => {
+    pesquisa.addEventListener('input', (event) => {
+        // Pega o valor que está digitado na caixa de texto
+        const termoBusca = event.target.value
+        
+        // Filtra os produtos com a função que você criou
+        const listaFiltrada = resultadoPesquisa(termoBusca)
+        
+        // Manda os produtos encontrados para desenhar na tela
+        montandoCards(listaFiltrada)
+    })
+}
 //FILTRANDO PRODUTOS 
 const produtosFiltrados = (idSecao) => {
     return produtos.filter(elem => elem.id_secao === idSecao)
 }
+//FILTRANDO PELA PESQUISA
+const resultadoPesquisa = (textoDigitado) => {
+    return produtos.filter(elem => 
+        //Isso aqui faz com que minusculos, maiusculos, frases incompletas, sejam reconhecidas e deem resultado
+        elem.descricao_produto.toLowerCase().includes(textoDigitado.toLowerCase())
+    )
+}
+
 
 //MONTANDO CARDS
 const montandoCards = (objProdutos) => {
@@ -104,6 +132,12 @@ const montandoCards = (objProdutos) => {
         divCard.appendChild(btnCard)
 
         section_cards.appendChild(divCard)
-
     })
 }
+
+// ==========================================
+// CHAMADAS DE INICIALIZAÇÃO (NO FINAL DO ARQUIVO)
+// ==========================================
+listarProdutos()
+montarSecoes()
+ativarPesquisa()
