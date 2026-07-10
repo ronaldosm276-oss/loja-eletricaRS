@@ -116,6 +116,7 @@ const montandoCards = (objProdutos) => {
         imgProduto.setAttribute('class', 'img_card')
 
         const h2Titulo = document.createElement('h2')
+        h2Titulo.setAttribute('class', 'tito_card')
         h2Titulo.innerHTML = elem.descricao_produto
 
         const h3Valor = document.createElement('h3')

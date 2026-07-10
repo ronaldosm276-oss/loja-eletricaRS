@@ -114,36 +114,50 @@
     display: flex;
     justify-content: center; /* Centraliza a barra de seções na tela */
     width: 100%;
+    margin-bottom: 20px;
 }
 
 /* A lista (UL) que segura os botões das seções */
 #menu-secoes {
-    width: auto; /* Deixa a largura fluida com base no conteúdo (ou use 900px se quiser fixo) */
-    min-width: 600px;
-    height: auto; /* Deixa o elemento respirar de acordo com o padding */
-    padding: 15px 30px;
-    margin: 20px auto;
+    width: 95%; /* Ocupa quase toda a largura disponível na tela */
+    max-width: 1200px; /* Evita que ele estique infinitamente em telas gigantes */
+    height: auto; 
+    padding: 15px;
+    margin: 20px;
     
     display: flex;
-    list-style: none; /* Remove as bolinhas da lista */
+    flex-wrap: wrap; /* CRUCIAL: Se o botão não couber, ele vai para baixo em vez de quebrar o texto! */
+    list-style: none; 
     align-items: center;
     justify-content: center;
-    gap: 20px; /* Espaçamento entre os botões */
+    gap: 15px; /* Reduzi um pouco o espaço para caberem mais na mesma linha */
     
-    border: 2px solid #685d5d; /* Sintaxe reduzida para borda */
-    border-radius: 10px; /* Suaviza os cantos da barra principal */
+    border: 2px solid #685d5d; 
+    border-radius: 10px; 
 }
+
 
 /* O botão/link da seção (Estilo base igual ao seu .lnk_menu) */
 #menu-secoes .lnk-secao {
     background-color: #595e52;
     border: 2px solid #685d5d;
-    border-radius: 15px;
-    padding: 8px 16px; /* Espaçamento interno para parecer um botão real */
+    border-radius: 8px; /* Cantos um pouco menos arredondados evitam cortar textos em duas linhas */
+    padding: 10px 16px; 
     font-weight: bold;
-    transition: all 0.2s ease-in-out; /* Deixa o efeito de aumentar suave e profissional */
+    display: inline-block; /* Garante que o link respeite os limites de bloco */
+    text-align: center; /* Centraliza o texto se ele quebrar em duas linhas */
+    max-width: 220px; /* Limita o tamanho máximo do botão para forçar uma quebra bonita */
+    line-height: 1.2; /* Ajusta o espaçamento entre as duas linhas de texto */
+    transition: all 0.2s ease-in-out; 
 }
 
+/* Ajuste sutil no tamanho da fonte para o hover não ser agressivo a ponto de estourar a caixa */
+#menu-secoes a.lnk-secao:hover {
+    font-size: 1.25em; /* Diminuído ligeiramente de 1.35em para estabilidade visual */
+    color: var(--cor_principal);
+    background-color: #6e7565; 
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2); 
+}
 /* Estados do link das seções (Copiando o comportamento do seu menu principal) */
 #menu-secoes a.lnk-secao:link,
 #menu-secoes a.lnk-secao:visited {
@@ -189,7 +203,7 @@
 
 #cards{
     background-color: var(--cor_defundo);
-    width: 1000px;
+    width: 1140px;
     min-height: 500px;
     margin: 20px 0px;
     padding: 20px;
