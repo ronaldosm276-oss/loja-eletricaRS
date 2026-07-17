@@ -202,6 +202,7 @@
 }
 
 #cards{
+
     background-color: var(--cor_defundo);
     width: 1140px;
     min-height: 500px;
@@ -243,9 +244,9 @@
     width: 100%;
     height: 45px;
     text-transform: uppercase;
-    letter-spacing: 5px;
-    border-style:ridge
-    
+    letter-spacing: 1px;
+    border-style: ridge;
+
 }
 
 .card img{

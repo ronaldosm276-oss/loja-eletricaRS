@@ -93,6 +93,12 @@
     text-align: right;
 }
 
+.img-X{
+    width: 25px;
+    height: 25px;
+    cursor: pointer;
+}
+
 /* --- LADO DIREITO: Painel Lateral --- */
 #lateral {
     flex: 1;

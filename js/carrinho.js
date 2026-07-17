@@ -3,11 +3,11 @@ document.addEventListener("DOMContentLoaded", function () {
     const tabelaItens = document.getElementById("itens-carrinho");
     const containerVazio = document.getElementById("carrinho-vazio");
     const tabelaCompleta = document.querySelector(".tabela-carrinho");
-    
+
     const txtSubtotal = document.getElementById("valor-subtotal");
     const txtFrete = document.getElementById("valor-frete");
     const txtTotal = document.getElementById("valor-total");
-    
+
     const btnCalcularFrete = document.getElementById("btn-calcular-frete");
     const btnFinalizarCompra = document.getElementById("btn-finalizar-compra");
     const inputCep = document.getElementById("input-cep");
@@ -24,7 +24,7 @@ document.addEventListener("DOMContentLoaded", function () {
         if (carrinho.length === 0) {
             tabelaCompleta.style.display = "none"; // Esconde a tabela
             containerVazio.style.display = "block"; // Mostra a mensagem "Carrinho Vazio"
-            
+
             // Zera os valores exibidos na lateral
             txtSubtotal.textContent = "R$ 0,00";
             txtFrete.textContent = "R$ 0,00";
@@ -57,7 +57,14 @@ document.addEventListener("DOMContentLoaded", function () {
                         <button class="btn-qtd btn-aumentar" data-index="${index}">+</button>
                     </div>
                 </td>
-                <td class="td-preco">R$ ${(produto.preco * produto.quantidade).toFixed(2).replace(".", ",")}</td>
+              
+                <td class="td-precoTotal">R$${produto.preco.toFixed(2).replace(".", ",")}</td>
+
+                <td class="td-preco">R$${(produto.preco * produto.quantidade).toFixed(2).replace(".", ",")}</td>
+
+                <td class="td-X"><img src="../image/icon/excluir.png" class="img-X" data-index="${index}"></td>
+
+
             `;
 
             tabelaItens.appendChild(linha);
@@ -94,20 +101,24 @@ document.addEventListener("DOMContentLoaded", function () {
 
         if (evento.target.classList.contains("btn-aumentar")) {
             carrinho[index].quantidade += 1;
-        } 
+        }
+       
         else if (evento.target.classList.contains("btn-diminuir")) {
             carrinho[index].quantidade -= 1;
             if (carrinho[index].quantidade <= 0) {
                 carrinho.splice(index, 1);
             }
         }
+        if (evento.target.classList.contains("img-X")) {
+            carrinho.splice(index, 1);
+        }
 
         localStorage.setItem("carrinho-fake", JSON.stringify(carrinho));
         renderizarCarrinho();
     });
 
-   // 5. ADAPTAÇÃO DA API VIACEP (Usando a técnica de Callback / JSONP enviada)
-    
+    // 5. ADAPTAÇÃO DA API VIACEP (Usando a técnica de Callback / JSONP enviada)
+
     // Esta função global receberá o resultado vindo do script do ViaCEP
     window.meu_callback = function (conteudo) {
         if (!("erro" in conteudo)) {
@@ -120,16 +131,16 @@ document.addEventListener("DOMContentLoaded", function () {
                     valorFreteAtual = 0.00; // Frete Grátis para o estado local
                     break;
 
-                case "AL": 
+                case "AL":
                 case "BA":
                     valorFreteAtual = 12.90; // Vizinhos diretos (Nordeste mais próximo)
                     break;
 
-                case "PE": 
-                case "CE": 
-                case "RN": 
-                case "PB": 
-                case "MA": 
+                case "PE":
+                case "CE":
+                case "RN":
+                case "PB":
+                case "MA":
                 case "PI":
                     valorFreteAtual = 19.90; // Restante do Nordeste
                     break;
@@ -138,28 +149,28 @@ document.addEventListener("DOMContentLoaded", function () {
                     valorFreteAtual = 22.00; // Eixo RJ-SP (Grande fluxo logístico/rodoviário, preço competitivo)
                     break;
 
-                case "RJ": 
-                case "MG": 
+                case "RJ":
+                case "MG":
                 case "ES":
                     valorFreteAtual = 26.50; // Restante da Região Sudeste
                     break;
 
-                case "PR": 
-                case "SC": 
+                case "PR":
+                case "SC":
                 case "RS":
-                case "GO": 
-                case "DF": 
-                case "MS": 
+                case "GO":
+                case "DF":
+                case "MS":
                 case "MT":
                     valorFreteAtual = 35.00; // Regiões Sul e Centro-Oeste (Maior distância rodoviária)
                     break;
 
-                case "AM": 
-                case "PA": 
-                case "RO": 
-                case "RR": 
-                case "AC": 
-                case "TO": 
+                case "AM":
+                case "PA":
+                case "RO":
+                case "RR":
+                case "AC":
+                case "TO":
                 case "AP":
                     valorFreteAtual = 49.90; // Região Norte (Logística complexa e grandes distâncias)
                     break;
@@ -170,7 +181,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
             // Alerta informativo ao usuário com os dados reais da API
             alert(`CEP localizado com sucesso!\nCidade: ${conteudo.localidade} - ${estado}\nFrete atualizado para a sua região.`);
-            
+
             // Recarrega o carrinho para aplicar as contas com o novo frete
             renderizarCarrinho();
         } else {
@@ -196,7 +207,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 var script = document.createElement('script');
 
                 // Sincroniza com o nosso callback global criado acima
-                script.src = 'https://viacep.com.br/ws/'+ cep + '/json/?callback=meu_callback';
+                script.src = 'https://viacep.com.br/ws/' + cep + '/json/?callback=meu_callback';
 
                 // Insere o script no documento para carregar o conteúdo e executar o callback
                 document.body.appendChild(script);
@@ -209,16 +220,25 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     // 6. Botão de Finalizar Compra
-    btnFinalizarCompra.addEventListener("click", function () {
-        alert("Compra finalizada com sucesso! Obrigado por comprar na RS Elétrica.");
-        localStorage.removeItem("carrinho-fake");
-        valorFreteAtual = 0;
-        renderizarCarrinho();
-    });
+btnFinalizarCompra.addEventListener("click", function () {
 
-    // Inicializa a página rodando a renderização pela primeira vez
+    // Verifica se existe a flag de login no localStorage
+    const estaLogado = localStorage.getItem('logado')
+
+    if (!estaLogado || estaLogado !== 'true') {
+        alert('Você precisa fazer login para finalizar a compra.')
+        window.location.href = 'login.html'
+        return // interrompe a função aqui, o resto do código abaixo não executa
+    }
+
+    alert("Compra finalizada com sucesso! Obrigado por comprar na RS Elétrica.");
+    localStorage.removeItem("carrinho-fake");
+    valorFreteAtual = 0;
     renderizarCarrinho();
 });
+   // Inicializa a página rodando a renderização pela primeira vez
+   renderizarCarrinho();
+});   // <-- fecha o document.addEventListener("DOMContentLoaded", ...)
 
 // Função para aplicar a máscara e limitar o CEP enquanto o usuário digita
 inputCep.addEventListener("input", function (evento) {

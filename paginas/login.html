@@ -11,7 +11,7 @@
 
     <link rel="stylesheet" href="../css/style_estrutura_paginas.css">
     <link rel="stylesheet" href="../css/style_formulario.css">
-
+    <script src="../js/cadastro_login.js" defer></script>
 
 </head>
 
@@ -53,9 +53,22 @@
             <input type="text" name="pesquisa" id="pesquisa" placeholder="Digite seu produto">
         </section>
 
+        <h3>Esta é a página de login</h3>
 
-            <h3>Esta é a página de login</h3>
-       
+        <form action="" id="login">
+
+            <label for="nome">CPF</label>
+            <input type="text" name="nome" id="cpf" class="input01" required maxlength="14"
+                placeholder="Digite seu CPF">
+
+            <label for="nome">SENHA</label>
+            <input type="password" name="nome" id="senha" class="input01" required maxlength="6"
+                placeholder="Digite sua senha">
+
+                <button type="submit">Fazer Login</button>
+        </form>
+
+        <a href="cadastro.html" id="lnk_Cadastro">Faça seu cadastro</a>
 
 
         <footer id="rodape">
