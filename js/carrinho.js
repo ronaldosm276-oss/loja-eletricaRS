@@ -14,6 +14,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Variável global para controlar o valor do frete fictício
     let valorFreteAtual = 0;
+    let freteCalculado = false;
 
     // 2. Função principal para renderizar os produtos na tela
     function renderizarCarrinho() {
@@ -57,7 +58,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         <button class="btn-qtd btn-aumentar" data-index="${index}">+</button>
                     </div>
                 </td>
-              
+
                 <td class="td-precoTotal">R$${produto.preco.toFixed(2).replace(".", ",")}</td>
 
                 <td class="td-preco">R$${(produto.preco * produto.quantidade).toFixed(2).replace(".", ",")}</td>
@@ -102,7 +103,7 @@ document.addEventListener("DOMContentLoaded", function () {
         if (evento.target.classList.contains("btn-aumentar")) {
             carrinho[index].quantidade += 1;
         }
-       
+
         else if (evento.target.classList.contains("btn-diminuir")) {
             carrinho[index].quantidade -= 1;
             if (carrinho[index].quantidade <= 0) {
@@ -117,144 +118,134 @@ document.addEventListener("DOMContentLoaded", function () {
         renderizarCarrinho();
     });
 
-    // 5. ADAPTAÇÃO DA API VIACEP (Usando a técnica de Callback / JSONP enviada)
-
-    // Esta função global receberá o resultado vindo do script do ViaCEP
-    window.meu_callback = function (conteudo) {
-        if (!("erro" in conteudo)) {
-            // CEP encontrado com sucesso! Obtemos o Estado (UF)
-            const estado = conteudo.uf;
-
-            // REGRA LOGÍSTICA DE FRETE (Baseada em Sergipe)
-            switch (estado) {
-                case "SE":
-                    valorFreteAtual = 0.00; // Frete Grátis para o estado local
-                    break;
-
-                case "AL":
-                case "BA":
-                    valorFreteAtual = 12.90; // Vizinhos diretos (Nordeste mais próximo)
-                    break;
-
-                case "PE":
-                case "CE":
-                case "RN":
-                case "PB":
-                case "MA":
-                case "PI":
-                    valorFreteAtual = 19.90; // Restante do Nordeste
-                    break;
-
-                case "SP":
-                    valorFreteAtual = 22.00; // Eixo RJ-SP (Grande fluxo logístico/rodoviário, preço competitivo)
-                    break;
-
-                case "RJ":
-                case "MG":
-                case "ES":
-                    valorFreteAtual = 26.50; // Restante da Região Sudeste
-                    break;
-
-                case "PR":
-                case "SC":
-                case "RS":
-                case "GO":
-                case "DF":
-                case "MS":
-                case "MT":
-                    valorFreteAtual = 35.00; // Regiões Sul e Centro-Oeste (Maior distância rodoviária)
-                    break;
-
-                case "AM":
-                case "PA":
-                case "RO":
-                case "RR":
-                case "AC":
-                case "TO":
-                case "AP":
-                    valorFreteAtual = 49.90; // Região Norte (Logística complexa e grandes distâncias)
-                    break;
-
-                default:
-                    valorFreteAtual = 25.00; // Caso venha algum estado não mapeado
-            }
-
-            // Alerta informativo ao usuário com os dados reais da API
-            alert(`CEP localizado com sucesso!\nCidade: ${conteudo.localidade} - ${estado}\nFrete atualizado para a sua região.`);
-
-            // Recarrega o carrinho para aplicar as contas com o novo frete
-            renderizarCarrinho();
-        } else {
-            // CEP pesquisado mas não existe na base dos Correios
-            valorFreteAtual = 0;
-            alert("CEP não encontrado.");
-            renderizarCarrinho();
-        }
+    // 5. Mapa de UF -> valor do frete (regra logística baseada em Sergipe)
+    const TABELA_FRETE = {
+        SE: 0.00,                                  // Frete grátis para o estado local
+        AL: 12.90, BA: 12.90,                       // Vizinhos diretos (Nordeste mais próximo)
+        PE: 19.90, CE: 19.90, RN: 19.90, PB: 19.90,
+        MA: 19.90, PI: 19.90,                       // Restante do Nordeste
+        SP: 22.00,                                  // Eixo RJ-SP
+        RJ: 26.50, MG: 26.50, ES: 26.50,            // Restante do Sudeste
+        PR: 35.00, SC: 35.00, RS: 35.00,
+        GO: 35.00, DF: 35.00, MS: 35.00, MT: 35.00, // Sul e Centro-Oeste
+        AM: 49.90, PA: 49.90, RO: 49.90, RR: 49.90,
+        AC: 49.90, TO: 49.90, AP: 49.90             // Região Norte
     };
+    const FRETE_PADRAO = 25.00; // Caso venha algum estado não mapeado
+
+    // Consulta o ViaCEP via fetch (API REST normal, com suporte a CORS)
+    async function consultarCep(cep) {
+        const resposta = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
+
+        if (!resposta.ok) {
+            throw new Error(`Erro HTTP: ${resposta.status}`);
+        }
+
+        return resposta.json();
+    }
 
     // Ação acionada ao clicar no botão "Calcular" do formulário de frete
-    btnCalcularFrete.addEventListener("click", function () {
-        // Nova variável "cep" somente com dígitos (exatamente como no seu exemplo)
-        var cep = inputCep.value.replace(/\D/g, '');
+    btnCalcularFrete.addEventListener("click", async function () {
+        const cep = inputCep.value.replace(/\D/g, "");
 
-        // Verifica se o campo cep possui valor informado
-        if (cep != "") {
-            // Expressão regular para validar o CEP (8 dígitos numéricos)
-            var validacep = /^[0-9]{8}$/;
-
-            if (validacep.test(cep)) {
-                // Cria um elemento javascript de forma dinâmica
-                var script = document.createElement('script');
-
-                // Sincroniza com o nosso callback global criado acima
-                script.src = 'https://viacep.com.br/ws/' + cep + '/json/?callback=meu_callback';
-
-                // Insere o script no documento para carregar o conteúdo e executar o callback
-                document.body.appendChild(script);
-            } else {
-                alert("Formato de CEP inválido.");
-            }
-        } else {
+        if (cep === "") {
             alert("Por favor, informe um CEP.");
+            return;
+            
+        }
+
+        const validacep = /^[0-9]{8}$/;
+        if (!validacep.test(cep)) {
+            alert("Formato de CEP inválido.");
+            return;
+        }
+
+        // Feedback visual simples enquanto a consulta acontece
+        const textoOriginalBotao = btnCalcularFrete.textContent;
+        btnCalcularFrete.disabled = true;
+        btnCalcularFrete.textContent = "Consultando...";
+
+        try {
+            const conteudo = await consultarCep(cep);
+
+            if ("erro" in conteudo) {
+                valorFreteAtual = 0;
+                alert("CEP não encontrado.");
+                renderizarCarrinho();
+                return;
+            }
+
+            const estado = conteudo.uf;
+            valorFreteAtual = TABELA_FRETE[estado] ?? FRETE_PADRAO;
+
+            freteCalculado = true;
+
+            alert(`CEP localizado com sucesso!\nCidade: ${conteudo.localidade} - ${estado}\nFrete atualizado para a sua região.`);
+            renderizarCarrinho();
+
+        } catch (erro) {
+            console.error("Erro ao consultar CEP:", erro);
+            alert("Não foi possível consultar o CEP. Verifique sua conexão e tente novamente.");
+            freteCalculado = false;
+        } finally {
+            btnCalcularFrete.disabled = false;
+            btnCalcularFrete.textContent = textoOriginalBotao;
         }
     });
 
     // 6. Botão de Finalizar Compra
-btnFinalizarCompra.addEventListener("click", function () {
+    btnFinalizarCompra.addEventListener("click", function () {
 
-    // Verifica se existe a flag de login no localStorage
-    const estaLogado = localStorage.getItem('logado')
+        // Verifica se existe a flag de login no localStorage
+        const estaLogado = localStorage.getItem("logado");
 
-    if (!estaLogado || estaLogado !== 'true') {
-        alert('Você precisa fazer login para finalizar a compra.')
-        window.location.href = 'login.html'
-        return // interrompe a função aqui, o resto do código abaixo não executa
+        if (!estaLogado || estaLogado !== "true") {
+            alert("Você precisa fazer login para finalizar a compra.");
+            window.location.href = "login.html";
+            return; // interrompe a função aqui, o resto do código abaixo não executa
+        }
+        
+        let carrinho = JSON.parse(localStorage.getItem("carrinho-fake")) || [];
+        if (carrinho.length == 0) {
+            alert("Adicione algum produto");
+            return;
+        }
+
+        if (!freteCalculado) {
+            alert("Por favor, calcule o frete antes de finalizar a compra.");
+            return;
+        }
+
+        alert("Compra finalizada com sucesso! Obrigado por comprar na RS Elétrica.");
+        localStorage.removeItem("carrinho-fake");
+        valorFreteAtual = 0;
+        freteCalculado = false;
+        renderizarCarrinho();
+    });
+
+    // 7. Máscara do CEP enquanto o usuário digita (agora dentro do escopo correto)
+    inputCep.addEventListener("input", function (evento) {
+        // Pega o valor atual e remove tudo que não for número
+        let valor = evento.target.value.replace(/\D/g, "");
+
+        // Limita a string a no máximo 8 números puros
+        if (valor.length > 8) {
+            valor = valor.slice(0, 8);
+        }
+
+        // Se o usuário digitou mais de 5 números, encaixa o hífen no meio
+        if (valor.length > 5) {
+            valor = valor.replace(/^(\d{5})(\d)/, "$1-$2");
+        }
+
+        // Devolve o valor formatado de volta para o campo de texto
+        evento.target.value = valor;
+    });
+
+    const cepSalvo = localStorage.getItem("cep-usuario-logado");
+    if (cepSalvo) {
+        inputCep.value = cepSalvo;
     }
-
-    alert("Compra finalizada com sucesso! Obrigado por comprar na RS Elétrica.");
-    localStorage.removeItem("carrinho-fake");
-    valorFreteAtual = 0;
+        
     renderizarCarrinho();
-});
-   // Inicializa a página rodando a renderização pela primeira vez
-   renderizarCarrinho();
-});   // <-- fecha o document.addEventListener("DOMContentLoaded", ...)
-
-// Função para aplicar a máscara e limitar o CEP enquanto o usuário digita
-inputCep.addEventListener("input", function (evento) {
-    // 1. Pega o valor atual e remove absolutamente tudo o que não for número
-    let valor = evento.target.value.replace(/\D/g, "");
-
-    // 2. Limita a string a no máximo 8 números puros
-    if (valor.length > 8) {
-        valor = valor.slice(0, 8);
-    }
-
-    // 3. Se o usuário digitou mais de 5 números, encaixa o hífen no meio
-    if (valor.length > 5) {
-        valor = valor.replace(/^(\d{5})(\d)/, "$1-$2");
-    }
-
-    // 4. Devolve o valor formatado de volta para o campo de texto
-    evento.target.value = valor;
 });

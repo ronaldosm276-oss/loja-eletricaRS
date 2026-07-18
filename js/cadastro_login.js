@@ -101,6 +101,7 @@ if (formLogin) {
         if (usuarioEncontrado) {
             localStorage.setItem('logado', 'true')
             localStorage.setItem('usuario-logado', usuarioEncontrado.nome)
+            localStorage.setItem('cep-usuario-logado', usuarioEncontrado.cep)
             alert(`Bem-vindo(a), ${usuarioEncontrado.nome}!`)
             window.location.href = 'carrinho.html'
         } else {
